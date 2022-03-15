@@ -91,9 +91,9 @@ In AppDelegate didFinishLaunchingWithOptions function , add the following syntax
        
         var orgID = " YOUR_PROXIMITY_SDK_ORG_ID"
         var deviceID = " YOUR_DEVICE_ID"
-        var stagingURL/productionURL = "https://{any-url}"
+        var isTestMode = TRUE/FALSE
         
-         DSProximityService.instance.configure(with: stagingURL, orgId: orgID,
+         DSProximityService.instance.configure(mode: isTestMode, orgId: orgID,
             deviceId: deviceID) { result in
             switch result {
             case .success(let response):
@@ -194,15 +194,15 @@ By default the SDK stops tracking only when the order is marked as completed by 
 The following method is used to accept the vehicle details and the contact information of the user whose location is being tracked.
 ```
     DSProximityService.instance.updateVehicleDetails(
-    vehicleMaker: "INPUT_VEHICLE_MAKE",
-    vehicleType: "INPUT_VEHICLE_TYPE",
-    vehicleNumber: "INPUT_VEHICLE_NUMBER",
-    description: "INPUT_VEHICLE_DESCRIPTION",
-    parkingSlot: "INPUT_VEHICLE_SLOT",
-    isPickupBySomeoneElse: false/true,
-    userName: "YOUR_USERNAME",
-    contactNumber: "INPUT_CONTACT_NUMBER",
-    orderId: "ORDER_ID"
+        vehicleMaker: "INPUT_VEHICLE_MAKE",
+        vehicleType: "INPUT_VEHICLE_TYPE",
+        vehicleNumber: "INPUT_VEHICLE_NUMBER",
+        description: "INPUT_VEHICLE_DESCRIPTION",
+        parkingSlot: "INPUT_VEHICLE_SLOT",
+        isPickupBySomeoneElse: false/true,
+        userName: "YOUR_USERNAME",
+        contactNumber: "INPUT_CONTACT_NUMBER",
+        orderId: "ORDER_ID"
     )
 ```
 
