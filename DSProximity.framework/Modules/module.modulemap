@@ -1,0 +1,11 @@
+framework module DSProximity {
+  umbrella header "DSProximity-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module DSProximity.Swift {
+    header "DSProximity-Swift.h"
+    requires objc
+}
