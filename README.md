@@ -9,20 +9,39 @@ Delivery Solutions Proximity Tracking SDK for iOS
 
 ## Links
  - [Contact Us](https://www.deliverysolutions.co/contact-us)
+ - [How to get YOUR_LICENSE_KEY](#faq)
 
 ## Features
 
 - Efficient Vehicle/Order tracking
 - Optimised battery usage
-- Geofencing capabilities and alerts
+- Geofencing capabilities
+- Alerts and Customer Notifications
 - Integrates with DS services to provide an end to end solution for Curbside, and In-Store Pickups
 
 
 ## Installation
-DSProximity is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+
+### Manually 
+
+- Download the framework zip from Github releases section and unzip it.
+- Drag and drop the framework file to your Xcode project
+- Select the main project from left pane navigator -> Click on Target -> Click on General -> Search for framework, libraries, enbedded content
+- You will find the DSProximity.framwork -> Select the Embed & Sign from dropdown.
+- Framework successfully added, Now clean and build the project. Follow the setup guide section from here.
+
+### Through Cocoapod 
+DSProximity is available through [CocoaPods](https://cocoapods.org). To install it, you would require to request an access to the source repository, once done, simply add the following line to your Podfile:
+
 ```ruby
-pod 'DSProximity'
+
+source URL ['https://deliverysolutions@bitbucket.org/deliverysolutions/proximity-sdk-ios-spec.git']
+
+target 'PROJECTNAME' do
+
+    pod 'DSProximity'
+    
+end
 ```
 Open your favorite Terminal and run these commands.
 
@@ -30,14 +49,15 @@ Open your favorite Terminal and run these commands.
 cd ds-proximity 
 pod install
 ```
-**Tested with `pod --version`: `1.8.4`**: <br/>
+**Tested with `pod --version`: `1.11.2`**: <br/>
 [CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
 
 **You should open the {Project}.xcworkspace instead of the {Project}.xcodeproj after you installed anything from CocoaPods.**
 
 ## Setup Guides
-> Supported Swift 5, iOS 14+
-> [How to get YOUR_LICENSE_KEY](#faq)
+By downloading any content you agree to abide by the terms of the license
+> Supported Swift 5
+> Supports iOS 14+ devices
 
 ## Usage
 Clean and Re-build application.
@@ -85,15 +105,14 @@ In AppDelegate didFinishLaunchingWithOptions function , add the following syntax
 
 ```
     // Properties initialiazer
-     let locationManager = CLLocationManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
        
         var orgID = " YOUR_PROXIMITY_SDK_ORG_ID"
         var deviceID = " YOUR_DEVICE_ID"
-        var isTestMode = TRUE/FALSE
+        var isTestMode = TRUE/FALSE [SANDBOX -> TRUE, PRODUCTION -> FALSE]
         
-         DSProximityService.instance.configure(mode: isTestMode, orgId: orgID,
+         DSProximityService.instance.configure(testMode: isTestMode, orgId: orgID,
             deviceId: deviceID) { result in
             switch result {
             case .success(let response):
@@ -102,14 +121,6 @@ In AppDelegate didFinishLaunchingWithOptions function , add the following syntax
                 print("SDK - Failed to initialize: \(error.localizedDescription)")
             }
         }
-        
-        UIApplication.shared.setMinimumBackgroundFetchInterval(
-            UIApplication.backgroundFetchIntervalMinimum)
-        
-        locationManager.requestAlwaysAuthorization()
-        locationManager.allowsBackgroundLocationUpdates = true
-        locationManager.pausesLocationUpdatesAutomatically = false
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         return true
     }
@@ -194,15 +205,15 @@ By default the SDK stops tracking only when the order is marked as completed by 
 The following method is used to accept the vehicle details and the contact information of the user whose location is being tracked.
 ```
     DSProximityService.instance.updateVehicleDetails(
-        vehicleMaker: "INPUT_VEHICLE_MAKE",
-        vehicleType: "INPUT_VEHICLE_TYPE",
-        vehicleNumber: "INPUT_VEHICLE_NUMBER",
-        description: "INPUT_VEHICLE_DESCRIPTION",
-        parkingSlot: "INPUT_VEHICLE_SLOT",
-        isPickupBySomeoneElse: false/true,
-        userName: "YOUR_USERNAME",
-        contactNumber: "INPUT_CONTACT_NUMBER",
-        orderId: "ORDER_ID"
+    vehicleMaker: "INPUT_VEHICLE_MAKE",
+    vehicleType: "INPUT_VEHICLE_TYPE",
+    vehicleNumber: "INPUT_VEHICLE_NUMBER",
+    description: "INPUT_VEHICLE_DESCRIPTION",
+    parkingSlot: "INPUT_VEHICLE_SLOT",
+    isPickupBySomeoneElse: false/true,
+    userName: "YOUR_USERNAME",
+    contactNumber: "INPUT_CONTACT_NUMBER",
+    orderId: "ORDER_ID"
     )
 ```
 
@@ -218,11 +229,11 @@ extension ViewController: DSProximityServiceProtocol {
         view.makeToast("Location Permission allowed")
     }
     
-    func updatedOrder() {
+    func orderUpdated() {
         view.makeToast("Order Updated successfully")
     }
     
-    func updatedFailed() {
+    func orderFailed() {
         view.makeToast("Order update failed. Please try again")
     }
     
@@ -243,8 +254,12 @@ extension ViewController: DSProximityServiceProtocol {
         startTracking.isEnabled = true
         startTracking.setTitle("Start Tracking", for: .normal)
     }
-    func locationUpdate() {
+    func locationUpdated() {
         view.makeToast("Location updated successfully")
+    }
+    
+    func locationfailed() {
+        view.makeToast("Location failed to update")
     }
 }
 ```
@@ -253,6 +268,7 @@ extension ViewController: DSProximityServiceProtocol {
 #### How can I get the licence key / accessToken?
 
 Please raise a ticket with [DS support](https://www.deliverysolutions.co/contact-us) with details about the usage and the team shall provide the required keys.
+
 ## License
 
 Copyright (c) 2022 by [Delivery Solutions](https://www.deliverysolutions.co). All Rights Reserved. Usage of this library implies agreement to abide by the license terms. Please refer to our [Terms of Service](https://www.deliverysolutions.co/terms-of-service).
