@@ -1,7 +1,7 @@
 # Official Proximity SDK for iOS
 
 <p align="center" width="100%">
-    <img width="33%" src="https://images.squarespace-cdn.com/content/v1/6073efa8ab5c5b78808fe878/1618336613080-9PJH9HELYSVDIBCPF7OU/logo.png?format=1500w">
+    <img src="https://raw.githubusercontent.com/delivery-solutions/ds-proximity-sdk-ios/master/ProximitySDK_Banner_iOS.png">
 </p>
 
 &nbsp;
